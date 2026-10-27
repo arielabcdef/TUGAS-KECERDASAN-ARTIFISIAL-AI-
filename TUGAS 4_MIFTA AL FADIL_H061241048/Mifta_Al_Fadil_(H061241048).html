@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Karhutla Ketapang</title>
+<style>
+:root{--bg:#f3f6f4;--panel:#fff;--ink:#172b25;--muted:#66766f;--line:#dfe7e2;--green:#16734b;--lime:#b7dc6c;--orange:#e7833b;--red:#c94b42;--shadow:0 8px 24px #173b2810}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body.dark{--bg:#101915;--panel:#19251f;--ink:#e7f0ea;--muted:#a2b3a8;--line:#304137;--green:#65c995;--lime:#b7dc6c;--orange:#f1a35f;--red:#ff8177;--shadow:0 8px 24px #0003}
+header{background:linear-gradient(120deg,#103f2d,#1c7950);color:white;padding:30px max(20px,calc((100% - 1180px)/2));position:relative;overflow:hidden}
+header:after{content:"";position:absolute;width:300px;height:300px;border:1px solid #ffffff28;border-radius:50%;right:5%;top:-170px;box-shadow:0 0 0 35px #ffffff0a,0 0 0 75px #ffffff08}
+.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c5e9d2;font-weight:700}
+h1{font-size:clamp(27px,4vw,42px);line-height:1.1;margin:9px 0 12px;max-width:760px}
+header p{max-width:760px;color:#e1f0e6;margin:0}.headrow{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;position:relative;z-index:1}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:9px 13px;border-radius:10px;font-weight:650;cursor:pointer}.btn.light{background:#ffffff18;border-color:#ffffff55;color:white}
+main{max-width:1180px;margin:22px auto;padding:0 18px 38px}.notice{background:#fff8e9;color:#65451d;border:1px solid #f2d8a7;padding:12px 15px;border-radius:12px;margin-bottom:18px;font-size:13px}
+body.dark .notice{background:#332b1b;color:#f1d9a9;border-color:#5d4b2b}
+.filters{display:flex;gap:12px;align-items:end;flex-wrap:wrap;background:var(--panel);padding:15px;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:16px}
+label{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:12px;font-weight:700}select,input{font:inherit;background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:9px 10px;border-radius:9px;min-width:145px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:16px 0}.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:var(--shadow);min-width:0}.kpi .label{color:var(--muted);font-size:12px;font-weight:700}.kpi .value{font-size:clamp(23px,3vw,32px);font-weight:800;letter-spacing:-1px;margin:4px 0}.kpi .sub{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:1.45fr 1fr;gap:15px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px;box-shadow:var(--shadow);min-width:0;margin-bottom:15px}.panel h2{font-size:17px;margin:0 0 4px}.desc{color:var(--muted);font-size:12px;margin-bottom:12px}.chartwrap{height:280px;position:relative}canvas{width:100%;height:100%;display:block}.insight{display:grid;gap:10px}.insight-item{padding:12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)}.insight-item b{display:block;margin-bottom:3px}.insight-item span{font-size:13px;color:var(--muted)}
+.tabletop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.tablewrap{overflow:auto;margin-top:12px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;background:var(--bg)}td.num{text-align:right;font-variant-numeric:tabular-nums}.pill{display:inline-block;padding:3px 8px;border-radius:99px;background:#e3f3e9;color:#17613e;font-size:11px;font-weight:750}body.dark .pill{background:#244633;color:#a7e7bd}.source-list{padding-left:18px;margin:8px 0}.source-list li{margin:7px 0}.source-list a{color:var(--green);overflow-wrap:anywhere}.foot{font-size:12px;color:var(--muted);margin-top:16px}
+@media(max-width:800px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.headrow{display:block}.actions{margin-top:18px}.chartwrap{height:250px}}
+@media print{body{background:white!important;color:#172b25!important;--bg:#fff;--panel:#fff;--ink:#172b25;--muted:#66766f;--line:#ddd;--shadow:none}.actions,.filters,.no-print{display:none!important}header{padding:18px;color:white!important;print-color-adjust:exact}.panel,.kpi{break-inside:avoid;box-shadow:none}main{max-width:none;margin:0;padding:12px}.grid{grid-template-columns:1.3fr 1fr}.chartwrap{height:220px}a{color:#16734b}}
+</style>
+</head>
+<body>
+<header>
+ <div class="headrow"><div>
+  <div class="eyebrow">Dashboard lingkungan · Kalimantan Barat</div>
+  <h1>Pemantauan Hotspot Karhutla</h1>
+  <p>Kabupaten Ketapang — ringkasan titik panas bulanan dari publikasi resmi BMKG. Dashboard ini membantu melihat pola waktu dan membandingkan jumlah hotspot yang terdeteksi.</p>
+ </div><div class="actions"><button class="btn light" id="themeBtn">◐ Mode gelap</button><button class="btn light" onclick="window.print()">⤓ Cetak / Simpan PDF</button></div></div>
+</header>
+<main>
+ <div class="notice"><b>Catatan penting:</b> hotspot adalah indikasi anomali suhu permukaan yang terdeteksi satelit, bukan bukti otomatis bahwa setiap titik merupakan kebakaran terkonfirmasi. Data 2024 pada sumber ini hanya tersedia Januari–Oktober; jangan membandingkannya sebagai tahun penuh.</div>
+ <section class="filters no-print">
+  <label>Tahun<select id="year"><option value="all">Semua tahun</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024 (Jan–Okt)</option></select></label>
+  <label>Ambang hotspot<select id="threshold"><option value="0">Semua jumlah</option><option value="100">≥ 100 hotspot</option><option value="500">≥ 500 hotspot</option><option value="1000">≥ 1.000 hotspot</option></select></label>
+  <label>Cari bulan<input id="search" placeholder="Mis. Agustus"></label>
+  <button class="btn" id="reset">Reset filter</button>
+ </section>
+ <section class="kpis">
+  <div class="kpi"><div class="label">Total hotspot terpilih</div><div class="value" id="total">—</div><div class="sub" id="totalSub">Berdasarkan filter</div></div>
+  <div class="kpi"><div class="label">Bulan dengan hotspot terbanyak</div><div class="value" id="peak">—</div><div class="sub" id="peakSub">Pada data terpilih</div></div>
+  <div class="kpi"><div class="label">Jumlah tertinggi per bulan</div><div class="value" id="max">—</div><div class="sub" id="maxSub">Titik hotspot</div></div>
+  <div class="kpi"><div class="label">Bulan yang ditampilkan</div><div class="value" id="count">—</div><div class="sub">Setelah filter diterapkan</div></div>
+ </section>
+ <section class="grid">
+  <div class="panel"><h2>Tren hotspot bulanan</h2><div class="desc">Batang menunjukkan jumlah titik panas per bulan. Pilih tahun dan ambang di filter untuk mempersempit tampilan.</div><div class="chartwrap"><canvas id="barChart"></canvas></div></div>
+  <div class="panel"><h2>Perbandingan tahunan</h2><div class="desc">Jumlah pada tahun 2024 adalah data parsial Januari–Oktober.</div><div class="chartwrap"><canvas id="yearChart"></canvas></div></div>
+ </section>
+ <section class="grid">
+  <div class="panel"><h2>Temuan utama</h2><div class="desc">Ringkasan otomatis berdasarkan data yang sedang ditampilkan.</div><div class="insight" id="insights"></div></div>
+  <div class="panel"><h2>Interpretasi</h2><div class="desc">Hal yang perlu diperhatikan saat membaca grafik.</div>
+   <div class="insight">
+    <div class="insight-item"><b>Musim dan cuaca</b><span>BMKG mengaitkan peningkatan hotspot pada periode kering dengan kondisi cuaca yang mendukung kemudahan terjadinya karhutla. Grafik ini menunjukkan pola deteksi, bukan hubungan sebab-akibat yang telah diuji.</span></div>
+    <div class="insight-item"><b>Hotspot ≠ luas terbakar</b><span>Jumlah titik panas tidak dapat langsung dikonversi menjadi hektare lahan terbakar. Gunakan data luas terbakar BPBD/DLHK untuk analisis dampak.</span></div>
+    <div class="insight-item"><b>Perhatikan kelengkapan data</b><span>Tahun yang belum lengkap dapat terlihat lebih rendah hanya karena jumlah bulan pengamatan lebih sedikit.</span></div>
+   </div>
+  </div>
+ </section>
+ <section class="panel">
+  <div class="tabletop"><div><h2>Tabel data bulanan</h2><div class="desc">Satuan: titik hotspot yang dilaporkan pada publikasi BMKG.</div></div><button class="btn no-print" id="csvBtn">Unduh CSV hasil filter</button></div>
+  <div class="tablewrap"><table><thead><tr><th>Tahun</th><th>Bulan</th><th class="num">Hotspot</th><th>Status data</th></tr></thead><tbody id="tbody"></tbody></table></div>
+  <div class="foot" id="rowsFoot"></div>
+ </section>
+ <section class="panel"><h2>Sumber data dan metodologi</h2>
+  <p>Data bulanan ditranskripsikan dari grafik/tabel “Hotspot Bulanan Kab. Ketapang” dalam buletin resmi Stasiun Meteorologi Kalimantan Barat. Angka adalah jumlah hotspot terdeteksi, bukan jumlah kejadian kebakaran yang telah diverifikasi.</p>
+  <ul class="source-list">
+   <li><a href="https://kalbar.bmkg.go.id/buletin/pdf/Buletin%20Ketapang%20November%202024.pdf" target="_blank" rel="noopener">BMKG Kalimantan Barat — Buletin Ketapang, November 2024</a> (data 2022, 2023, dan Januari–Oktober 2024).</li>
+   <li><a href="https://kalbar.bmkg.go.id/buletin/pdf/Buletin%20Ketapang%20September%202025.pdf" target="_blank" rel="noopener">BMKG Kalimantan Barat — Buletin Ketapang, September 2025</a> (konteks pemantauan hotspot dan potensi kemudahan kebakaran).</li>
+   <li><a href="https://sipongi.gakkum.kehutanan.go.id/" target="_blank" rel="noopener">SiPongi+ Kementerian Kehutanan</a> — portal pemantauan hotspot dan informasi karhutla.</li>
+  </ul>
+  <div class="foot">Catatan metode: total tahunan 2024 dihitung hanya dari Januari sampai Oktober. Data dalam dashboard ini bersumber dari publikasi resmi, tetapi telah ditranskripsikan untuk keperluan visualisasi; cocokkan kembali dengan dokumen sumber untuk penggunaan akademik final.</div>
+ </section>
+</main>
+<script>
+const months=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+const data=[
+{year:2022,month:1,value:64},{year:2022,month:2,value:104},{year:2022,month:3,value:133},{year:2022,month:4,value:143},{year:2022,month:5,value:150},{year:2022,month:6,value:45},{year:2022,month:7,value:170},{year:2022,month:8,value:924},{year:2022,month:9,value:664},{year:2022,month:10,value:37},{year:2022,month:11,value:32},{year:2022,month:12,value:46},
+{year:2023,month:1,value:59},{year:2023,month:2,value:64},{year:2023,month:3,value:30},{year:2023,month:4,value:164},{year:2023,month:5,value:166},{year:2023,month:6,value:302},{year:2023,month:7,value:1165},{year:2023,month:8,value:5720},{year:2023,month:9,value:4526},{year:2023,month:10,value:2696},{year:2023,month:11,value:76},{year:2023,month:12,value:43},
+{year:2024,month:1,value:30},{year:2024,month:2,value:10},{year:2024,month:3,value:75},{year:2024,month:4,value:13},{year:2024,month:5,value:32},{year:2024,month:6,value:84},{year:2024,month:7,value:292},{year:2024,month:8,value:827},{year:2024,month:9,value:4521},{year:2024,month:10,value:255}
+];
+const fmt=n=>new Intl.NumberFormat('id-ID').format(n);
+function filtered(){let y=document.getElementById('year').value,th=+document.getElementById('threshold').value,q=document.getElementById('search').value.toLowerCase().trim();return data.filter(d=>(y==='all'||d.year===+y)&&d.value>=th&&months[d.month-1].toLowerCase().includes(q))}
+function drawBars(canvas,items,labelFn,valueFn,opts={}){const ctx=canvas.getContext('2d'),rect=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1;canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;ctx.clearRect(0,0,w,h);const css=getComputedStyle(document.body),muted=css.getPropertyValue('--muted').trim(),line=css.getPropertyValue('--line').trim(),green=css.getPropertyValue('--green').trim(),orange=css.getPropertyValue('--orange').trim();const pad={l:42,r:12,t:15,b:42},cw=w-pad.l-pad.r,ch=h-pad.t-pad.b;const max=Math.max(1,...items.map(valueFn));ctx.font='11px system-ui';ctx.textAlign='right';ctx.textBaseline='middle';for(let i=0;i<=4;i++){let y=pad.t+ch*i/4;ctx.strokeStyle=line;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle=muted;ctx.fillText(fmt(Math.round(max*(1-i/4))),pad.l-7,y)}if(!items.length){ctx.fillStyle=muted;ctx.textAlign='center';ctx.fillText('Tidak ada data untuk filter ini',w/2,h/2);return}
+const slot=cw/items.length,bw=Math.max(2,Math.min(34,slot*.64));items.forEach((it,i)=>{let v=valueFn(it),bh=v/max*(ch-4),x=pad.l+i*slot+(slot-bw)/2,y=pad.t+ch-bh;ctx.fillStyle=opts.colorFn?opts.colorFn(it):green;ctx.beginPath();let r=Math.min(5,bw/2);ctx.roundRect(x,y,bw,bh,[r,r,0,0]);ctx.fill();if(items.length<=15){ctx.fillStyle=muted;ctx.textAlign='center';ctx.textBaseline='top';let lab=labelFn(it);if(lab.length>8)lab=lab.slice(0,3);ctx.fillText(lab,x+bw/2,pad.t+ch+8)}});
+}
+function render(){const rows=filtered(),total=rows.reduce((s,d)=>s+d.value,0);document.getElementById('total').textContent=fmt(total);document.getElementById('totalSub').textContent=rows.length+' catatan bulan-tahun';document.getElementById('count').textContent=rows.length;
+const peak=rows.reduce((a,b)=>!a||b.value>a.value?b:a,null);document.getElementById('peak').textContent=peak?months[peak.month-1]:'—';document.getElementById('peakSub').textContent=peak?peak.year+' · '+fmt(peak.value)+' hotspot':'Tidak ada data';document.getElementById('max').textContent=peak?fmt(peak.value):'—';document.getElementById('maxSub').textContent=peak?'Tertinggi dalam hasil filter':'Tidak ada data';
+const trend=rows.slice().sort((a,b)=>a.year-b.year||a.month-b.month);drawBars(document.getElementById('barChart'),trend,d=>months[d.month-1],d=>d.value,{colorFn:d=>d.value>=1000?'#c94b42':d.value>=500?'#e7833b':getComputedStyle(document.body).getPropertyValue('--green').trim()});
+const years=[2022,2023,2024].map(y=>({year:y,value:data.filter(d=>d.year===y&&(document.getElementById('year').value==='all'||y===+document.getElementById('year').value)&&d.value>=+document.getElementById('threshold').value&&months[d.month-1].toLowerCase().includes(document.getElementById('search').value.toLowerCase().trim())).reduce((s,d)=>s+d.value,0)})).filter(d=>document.getElementById('year').value==='all'||d.year===+document.getElementById('year').value);
+drawBars(document.getElementById('yearChart'),years,d=>String(d.year),d=>d.value,{colorFn:d=>d.year===2024?'#e7833b':getComputedStyle(document.body).getPropertyValue('--green').trim()});
+document.getElementById('tbody').innerHTML=rows.slice().sort((a,b)=>b.year-a.year||a.month-b.month).map(d=>`<tr><td>${d.year}</td><td>${months[d.month-1]}</td><td class="num"><b>${fmt(d.value)}</b></td><td><span class="pill">${d.year===2024?'Parsial · Jan–Okt':'Tahun penuh'}</span></td></tr>`).join('')||'<tr><td colspan="4">Tidak ada data yang cocok dengan filter.</td></tr>';
+document.getElementById('rowsFoot').textContent='Menampilkan '+rows.length+' baris dari '+data.length+' catatan bulanan yang tersedia.';
+let insights=[];if(peak)insights.push(`<div class="insight-item"><b>Puncak pada ${months[peak.month-1]} ${peak.year}</b><span>${fmt(peak.value)} hotspot tercatat pada bulan tertinggi di hasil filter.</span></div>`);
+const aug=rows.filter(d=>d.month>=7&&d.month<=10),other=rows.filter(d=>d.month<7||d.month>10);if(aug.length)insights.push(`<div class="insight-item"><b>Periode Juli–Oktober</b><span>${fmt(aug.reduce((s,d)=>s+d.value,0))} hotspot dari ${aug.length} catatan pada periode Juli–Oktober yang lolos filter.</span></div>`);
+const ys=[2022,2023,2024].map(y=>({y,n:data.filter(d=>d.year===y).reduce((s,d)=>s+d.value,0),months:data.filter(d=>d.year===y).length}));if(document.getElementById('year').value==='all'&&document.getElementById('threshold').value==='0'&&!document.getElementById('search').value)insights.push(`<div class="insight-item"><b>Bandingkan dengan memperhatikan cakupan</b><span>2023 berjumlah ${fmt(ys[1].n)} hotspot untuk 12 bulan, sedangkan 2024 berjumlah ${fmt(ys[2].n)} hanya untuk 10 bulan. Perbandingan 2024 belum setahun penuh.</span></div>`);
+if(!insights.length)insights.push('<div class="insight-item"><b>Filter terlalu ketat</b><span>Ubah filter untuk menampilkan temuan.</span></div>');document.getElementById('insights').innerHTML=insights.join('');
+}
+['year','threshold','search'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',render));document.getElementById('reset').addEventListener('click',()=>{document.getElementById('year').value='all';document.getElementById('threshold').value='0';document.getElementById('search').value='';render()});document.getElementById('themeBtn').addEventListener('click',()=>{document.body.classList.toggle('dark');document.getElementById('themeBtn').textContent=document.body.classList.contains('dark')?'☀ Mode terang':'◐ Mode gelap';render()});
+document.getElementById('csvBtn').addEventListener('click',()=>{const rows=filtered(),csv=[['Tahun','Bulan','Jumlah hotspot','Status data'],...rows.map(d=>[d.year,months[d.month-1],d.value,d.year===2024?'Parsial Jan-Okt':'Tahun penuh'])].map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(',')).join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='data-hotspot-ketapang-filter.csv';a.click();URL.revokeObjectURL(url)});
+window.addEventListener('resize',render);render();
+</script>
+</body></html>
